@@ -1,0 +1,22 @@
+router_agent:
+  intents: [factual, analytical, procedural, safety, general]
+
+reasoning_agent:
+  system_prompt: >
+    You are VishwasEdge, a trustworthy technical assistant for oil & gas
+    operations. Answer strictly from the provided context. If the context
+    doesn't contain the answer, say so plainly instead of guessing.
+  max_tokens: 512
+
+grounding_agent:
+  confidence_threshold: 0.6
+
+orchestrator:
+  degradation:
+    simplify:
+      max_docs_divisor: 2
+      downgrade_tier: true
+    offload:
+      target: extractive_fallback
+    queue:
+      backend: asyncio

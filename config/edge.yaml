@@ -1,0 +1,21 @@
+edge_constraints:
+  target_latency_ms: 150
+  memory_budget_mb: 4096
+  offline_success_target: 0.98
+  cpu_utilization_target: 0.65
+
+quantization_router:
+  tiers:
+    - name: fast
+      description: extractive, no LLM call
+      target_latency_ms: 5
+    - name: haiku
+      description: analytical, cloud-light
+      target_latency_ms: 800
+    - name: sonnet
+      description: complex reasoning, cloud-heavy
+      target_latency_ms: 1500
+
+deployment:
+  architectures: [amd64, arm64]
+  max_image_size_mb: 500

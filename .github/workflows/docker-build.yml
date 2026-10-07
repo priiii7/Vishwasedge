@@ -1,0 +1,45 @@
+name: Docker Multi-Arch Build
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build backend (amd64 + arm64)
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: docker/Dockerfile.backend
+          platforms: linux/amd64,linux/arm64
+          push: false
+          tags: vishwasedge/backend:latest
+
+      - name: Build edge image (amd64 + arm64)
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: docker/Dockerfile.edge
+          platforms: linux/amd64,linux/arm64
+          push: false
+          tags: vishwasedge/edge:latest
+
+      - name: Build frontend
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: docker/Dockerfile.frontend
+          platforms: linux/amd64
+          push: false
+          tags: vishwasedge/frontend:latest

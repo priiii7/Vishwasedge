@@ -1,0 +1,23 @@
+app:
+  name: VishwasEdge
+  version: 1.0.0
+
+retrieval:
+  candidate_k: 15
+  rrf_alpha: 0.5
+  rrf_k: 60
+  rerank_top_k: 5
+  confidence_threshold: 0.6
+
+chunking:
+  strategy: semantic
+  target_size: 800
+  overlap_sentences: 1
+
+explainability:
+  top_n_what_ifs: 3
+
+resource_limits:
+  max_memory_mb: 4096
+  max_cpu_percent: 80
+  cache_size_mb: 512
